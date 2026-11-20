@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="Голос колледжа — платформа обратной связи студентов и администрации Nomad College.">
+    <title>{% block title %}Голос колледжа{% endblock %} · Nomad College</title>
+    <link rel="stylesheet" href="{% static 'css/college.css' %}">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Перейти к содержимому</a>
+    <header class="site-header" id="top">
+        <div class="header-inner">
+            <a class="brand" href="{% url 'design-preview' %}" aria-label="Nomad College — Голос колледжа">
+                <span class="brand-name">NOMAD COLLEGE</span>
+                <span class="brand-divider" aria-hidden="true"></span>
+                <span class="brand-product">Голос колледжа</span>
+            </a>
+            <nav class="main-nav" aria-label="Разделы предпросмотра">
+                <a href="#overview">Обзор</a>
+                <a href="#colors">Цвета</a>
+                <a href="#components">Компоненты</a>
+                <a href="#forms">Формы</a>
+            </nav>
+            <span class="preview-pill"><span class="preview-dot" aria-hidden="true"></span>Предпросмотр</span>
+        </div>
+    </header>
+
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span>Nomad College <span aria-hidden="true">·</span> Голос колледжа</span>
+            <a href="#top">Наверх <span aria-hidden="true">↑</span></a>
+        </div>
+    </footer>
+</body>
+</html>

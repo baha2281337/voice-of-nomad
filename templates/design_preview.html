@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}Дизайн-система{% endblock %}
+
+{% block content %}
+<section class="hero section-wrap" id="overview" aria-labelledby="page-title">
+    <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Дизайн-система · 01</p>
+        <h1 id="page-title">Голос каждого<br><span>имеет значение.</span></h1>
+        <p class="hero-description">Единое пространство, где студенты могут делиться идеями, а колледж — слышать и отвечать.</p>
+        <div class="hero-note">
+            <span class="note-mark" aria-hidden="true">i</span>
+            <p>Сейчас здесь представлен визуальный язык приложения. Пользовательские сценарии появятся в следующих этапах.</p>
+        </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="art-card">
+            <span class="art-kicker">NOMAD COLLEGE</span>
+            <span class="art-quote">«Когда нас слышат,<br>мы меняем больше»</span>
+            <span class="art-rule"></span>
+            <span class="art-caption">Голос колледжа</span>
+        </div>
+        <span class="art-spark spark-one">✳</span>
+        <span class="art-spark spark-two">✳</span>
+    </div>
+</section>
+
+<div class="section-wrap preview-banner" role="note">
+    <div class="banner-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.5 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+    </div>
+    <div>
+        <strong>Спокойный интерфейс, понятные действия</strong>
+        <p>Красный отмечает главное, а нейтральные поверхности помогают сосредоточиться на содержании.</p>
+    </div>
+    <span class="banner-index">01 / 04</span>
+</div>
+
+<section class="section-wrap showcase-section" id="colors" aria-labelledby="colors-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Основа интерфейса</p>
+            <h2 id="colors-title">Цвет и типографика</h2>
+        </div>
+        <p class="section-intro">Палитра сохраняет заданные цвета Nomad College. Красный используется точечно — для важных действий и акцентов.</p>
+    </div>
+    <div class="token-grid">
+        <article class="token-card">
+            <span class="swatch swatch-brand"></span>
+            <span class="token-name">Акцентный красный</span>
+            <code>#C62828</code>
+        </article>
+        <article class="token-card">
+            <span class="swatch swatch-white"></span>
+            <span class="token-name">Белый</span>
+            <code>#FFFFFF</code>
+        </article>
+        <article class="token-card">
+            <span class="swatch swatch-gray"></span>
+            <span class="token-name">Светло-серый</span>
+            <code>#F5F5F5</code>
+        </article>
+        <article class="token-card">
+            <span class="swatch swatch-text"></span>
+            <span class="token-name">Основной текст</span>
+            <code>#222222</code>
+        </article>
+    </div>
+    <div class="type-sample">
+        <div>
+            <span class="sample-label">Заголовок страницы</span>
+            <p class="type-display">Идеи для лучшего колледжа</p>
+        </div>
+        <div>
+            <span class="sample-label">Основной текст</span>
+            <p class="type-body">Каждое предложение помогает сделать учебную среду удобнее и лучше для всех.</p>
+        </div>
+        <div>
+            <span class="sample-label">Вторичная подпись</span>
+            <p class="type-muted">Обновлено недавно · Инфраструктура</p>
+        </div>
+    </div>
+</section>
+
+<section class="section-wrap showcase-section" id="components" aria-labelledby="components-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Повторно используемые элементы</p>
+            <h2 id="components-title">Кнопки, метки и карточки</h2>
+        </div>
+        <p class="section-intro">Компоненты используют единые размеры, скругления и состояния фокуса, чтобы интерфейс оставался предсказуемым.</p>
+    </div>
+    <div class="component-grid">
+        <article class="showcase-card button-showcase">
+            <div class="card-heading">
+                <span class="component-index">A</span>
+                <div><h3>Кнопки</h3><p>Варианты оформления</p></div>
+            </div>
+            <div class="button-row" aria-label="Примеры кнопок">
+                <button class="button button-primary" type="button">Основное действие</button>
+                <button class="button button-secondary" type="button">Вторичное</button>
+                <button class="button button-quiet" type="button">Текстовая</button>
+            </div>
+            <p class="component-caption">Демонстрационные элементы — действия пока не подключены.</p>
+        </article>
+        <article class="showcase-card status-showcase">
+            <div class="card-heading">
+                <span class="component-index">B</span>
+                <div><h3>Статусы</h3><p>Единая индикация этапов</p></div>
+            </div>
+            <div class="status-row" aria-label="Примеры статусов">
+                <span class="status status-new"><span></span>Новое</span>
+                <span class="status status-progress"><span></span>В работе</span>
+                <span class="status status-done"><span></span>Решено</span>
+            </div>
+            <p class="component-caption">Статусы показаны как элементы дизайн-системы.</p>
+        </article>
+        <article class="showcase-card request-card-showcase">
+            <div class="card-heading">
+                <span class="component-index">C</span>
+                <div><h3>Карточка обращения</h3><p>Шаблон без пользовательских данных</p></div>
+            </div>
+            <div class="request-card">
+                <div class="request-card-top"><span class="category-label">Категория</span><span class="status status-new"><span></span>Новое</span></div>
+                <h4>Здесь появится заголовок обращения</h4>
+                <p>Краткое описание поможет быстро понять суть предложения или проблемы.</p>
+                <div class="request-card-bottom"><span>Дата публикации</span><span class="vote-preview"><span aria-hidden="true">♡</span> Голоса</span></div>
+            </div>
+        </article>
+        <article class="showcase-card empty-showcase">
+            <div class="card-heading">
+                <span class="component-index">D</span>
+                <div><h3>Пустое состояние</h3><p>Когда пока нечего показать</p></div>
+            </div>
+            <div class="empty-state">
+                <div class="empty-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M5 5.75h14A1.25 1.25 0 0 1 20.25 7v10A1.25 1.25 0 0 1 19 18.25H5A1.25 1.25 0 0 1 3.75 17V7A1.25 1.25 0 0 1 5 5.75Z" stroke="currentColor" stroke-width="1.5"/><path d="m7 9 2 2 4-4M7.5 15h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <strong>Пока нет обращений</strong>
+                <span>Здесь появятся предложения студентов.</span>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section-wrap showcase-section form-section" id="forms" aria-labelledby="forms-title">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Понятный ввод</p>
+            <h2 id="forms-title">Поля и сообщения</h2>
+        </div>
+        <p class="section-intro">У полей есть явные подписи и место для подсказок. Отправка формы будет добавлена вместе с реальной логикой обращений.</p>
+    </div>
+    <div class="form-showcase">
+        <div class="field-group">
+            <label for="sample-title">Заголовок обращения</label>
+            <input id="sample-title" class="text-input" type="text" placeholder="Например, освещение в аудитории">
+            <span class="field-hint">Кратко опишите, что стоит улучшить.</span>
+        </div>
+        <div class="field-group">
+            <label for="sample-category">Категория</label>
+            <select id="sample-category" class="text-input">
+                <option value="">Выберите категорию</option>
+                <option>Инфраструктура</option>
+                <option>Учебный процесс</option>
+                <option>Другое</option>
+            </select>
+        </div>
+        <div class="field-group field-full">
+            <label for="sample-description">Подробности</label>
+            <textarea id="sample-description" class="text-input" rows="3" placeholder="Добавьте подробности"></textarea>
+        </div>
+        <div class="field-group field-full">
+            <span class="sample-label">Сообщение об ошибке</span>
+            <p class="field-error"><span aria-hidden="true">!</span>Проверьте это поле и попробуйте ещё раз.</p>
+        </div>
+        <div class="form-actions field-full">
+            <button class="button button-primary" type="button">Пример основной кнопки</button>
+            <span class="component-caption">Предпросмотр формы — данные не отправляются.</span>
+        </div>
+    </div>
+</section>
+
+<section class="closing-band" aria-label="Принцип дизайна">
+    <div class="section-wrap closing-inner">
+        <span class="closing-mark" aria-hidden="true">“</span>
+        <p>Удобный интерфейс начинается с уважения к времени и вниманию человека.</p>
+        <span class="closing-caption">Принцип дизайна · Nomad College</span>
+    </div>
+</section>
+{% endblock %}
