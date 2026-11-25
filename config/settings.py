@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_spectacular',
     'drf_spectacular_sidecar',
+    'accounts',
+    'feedback',
 ]
 
 MIDDLEWARE = [
@@ -80,6 +82,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
+AUTH_USER_MODEL = 'accounts.User'
 
 
 # Database
