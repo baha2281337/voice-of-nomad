@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Голос колледжа{% endblock %}
+
+{% block content %}
+<section class="hero section-wrap home-hero" id="overview" aria-labelledby="home-title">
+    <div class="hero-copy">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Nomad College · обратная связь</p>
+        <h1 id="home-title">Колледж становится лучше, <span>когда нас слышат.</span></h1>
+        <p class="hero-description">Предлагайте идеи, сообщайте о проблемах и следите за ответами администрации в одном месте.</p>
+        <div class="home-actions">
+            <button class="button button-primary" type="button" disabled aria-describedby="creation-note">Создать обращение</button>
+            {% if user.is_authenticated %}
+                <a class="button button-secondary" href="{% url 'accounts:profile' %}">Мой профиль</a>
+            {% else %}
+                <a class="button button-secondary" href="{% url 'accounts:register' %}">Создать аккаунт</a>
+            {% endif %}
+        </div>
+        <p class="home-action-note" id="creation-note">Форма обращений появится на следующем этапе.</p>
+    </div>
+    <div class="hero-art home-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+        <div class="art-card">
+            <span class="art-kicker">NOMAD COLLEGE</span>
+            <span class="art-quote">«Когда нас слышат,<br>мы меняем больше»</span>
+            <span class="art-rule"></span>
+            <span class="art-caption">Голос колледжа</span>
+        </div>
+        <span class="art-spark spark-one">✳</span>
+        <span class="art-spark spark-two">✳</span>
+    </div>
+</section>
+
+<section class="section-wrap home-stats" aria-label="Статистика обращений">
+    <article class="home-stat-card">
+        <span class="home-stat-icon" aria-hidden="true">↗</span>
+        <div><strong>{{ total_count }}</strong><span>Всего обращений</span></div>
+    </article>
+    <article class="home-stat-card">
+        <span class="home-stat-icon" aria-hidden="true">◷</span>
+        <div><strong>{{ active_count }}</strong><span>На рассмотрении и в работе</span></div>
+    </article>
+    <article class="home-stat-card">
+        <span class="home-stat-icon" aria-hidden="true">✓</span>
+        <div><strong>{{ resolved_count }}</strong><span>Решено</span></div>
+    </article>
+    <article class="home-stat-card">
+        <span class="home-stat-icon" aria-hidden="true">♡</span>
+        <div><strong>{{ vote_count }}</strong><span>Голосов за идеи</span></div>
+    </article>
+</section>
+
+<section class="section-wrap home-section" id="latest" aria-labelledby="latest-title">
+    <div class="home-section-heading">
+        <div>
+            <p class="eyebrow">Лента колледжа</p>
+            <h2 id="latest-title">Последние обращения</h2>
+        </div>
+        <span class="section-count">{{ total_count }} всего</span>
+    </div>
+    {% if latest_feedback %}
+        <div class="home-card-grid">
+            {% for item in latest_feedback %}
+                <article class="feed-card">
+                    <div class="feed-card-meta">
+                        <span class="category-label">{{ item.category.name }}</span>
+                        {% if item.status == 'new' %}<span class="status status-new"><span></span>{{ item.get_status_display }}</span>
+                        {% elif item.status == 'resolved' %}<span class="status status-done"><span></span>{{ item.get_status_display }}</span>
+                        {% elif item.status == 'rejected' %}<span class="status status-rejected"><span></span>{{ item.get_status_display }}</span>
+                        {% else %}<span class="status status-progress"><span></span>{{ item.get_status_display }}</span>{% endif %}
+                    </div>
+                    <p class="feed-kind">{{ item.get_kind_display }}</p>
+                    <h3>{{ item.title }}</h3>
+                    <p class="feed-description">{{ item.description|truncatechars:150 }}</p>
+                    <div class="feed-card-footer">
+                        <span>{% if item.is_anonymous %}Анонимно{% else %}{{ item.created_by.get_full_name|default:item.created_by.username }}{% endif %}</span>
+                        <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:'j E Y' }}</time>
+                        <span class="feed-votes" aria-label="{{ item.vote_count }} голосов">♡ {{ item.vote_count }}</span>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="home-empty-state">
+            <span class="empty-icon" aria-hidden="true">✳</span>
+            <strong>Пока обращений нет</strong>
+            <p>Когда появятся предложения и сообщения о проблемах, они будут собраны здесь.</p>
+        </div>
+    {% endif %}
+</section>
+
+<section class="section-wrap home-section" id="popular" aria-labelledby="popular-title">
+    <div class="home-section-heading">
+        <div>
+            <p class="eyebrow">Идеи студентов</p>
+            <h2 id="popular-title">Популярные предложения</h2>
+        </div>
+    </div>
+    {% if popular_proposals %}
+        <div class="home-card-grid home-card-grid-three">
+            {% for item in popular_proposals %}
+                <article class="feed-card feed-card-compact">
+                    <div class="feed-card-meta"><span class="category-label">{{ item.category.name }}</span><span class="feed-votes">♡ {{ item.vote_count }}</span></div>
+                    <h3>{{ item.title }}</h3>
+                    <p class="feed-description">{{ item.description|truncatechars:125 }}</p>
+                    <span class="feed-author">{% if item.is_anonymous %}Анонимно{% else %}{{ item.created_by.get_full_name|default:item.created_by.username }}{% endif %}</span>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="home-empty-state home-empty-compact">
+            <strong>Популярные предложения появятся здесь</strong>
+            <p>Сейчас в базе ещё нет предложений студентов.</p>
+        </div>
+    {% endif %}
+</section>
+
+<section class="section-wrap home-section" id="resolved" aria-labelledby="resolved-title">
+    <div class="home-section-heading">
+        <div>
+            <p class="eyebrow">Результаты</p>
+            <h2 id="resolved-title">Уже решено</h2>
+        </div>
+        <span class="section-count">{{ resolved_count }} решено</span>
+    </div>
+    {% if resolved_feedback %}
+        <div class="home-card-grid home-card-grid-three">
+            {% for item in resolved_feedback %}
+                <article class="feed-card feed-card-compact resolved-card">
+                    <div class="feed-card-meta"><span class="category-label">{{ item.category.name }}</span><span class="status status-done"><span></span>Решено</span></div>
+                    <h3>{{ item.title }}</h3>
+                    <p class="feed-description">{{ item.description|truncatechars:125 }}</p>
+                    <span class="feed-author">{% if item.is_anonymous %}Анонимно{% else %}{{ item.created_by.get_full_name|default:item.created_by.username }}{% endif %}</span>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="home-empty-state home-empty-compact">
+            <strong>Решённых обращений пока нет</strong>
+            <p>Здесь будут видны проблемы, по которым уже есть результат.</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<section class="section-wrap auth-wrap" aria-labelledby="auth-title">
+    <div class="auth-card auth-card-wide">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Аккаунт студента</p>
+        <h1 class="auth-title" id="auth-title">Создайте аккаунт</h1>
+        <p class="auth-intro">Регистрация создаёт аккаунт студента. Роль нельзя выбрать или изменить через эту форму.</p>
+
+        <form class="auth-form" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="auth-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+            {% for field in form %}
+                <div class="field-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}<div class="field-hint">{{ field.help_text|safe }}</div>{% endif %}
+                    {% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+                </div>
+            {% endfor %}
+            <button class="button button-primary auth-submit" type="submit">Создать аккаунт</button>
+        </form>
+        <p class="auth-switch">Уже зарегистрированы? <a href="{% url 'accounts:login' %}">Войти</a></p>
+    </div>
+</section>
+{% endblock %}

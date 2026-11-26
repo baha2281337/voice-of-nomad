@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Рабочая зона{% endblock %}
+
+{% block content %}
+<section class="section-wrap auth-wrap" aria-labelledby="staff-title">
+    <div class="auth-card profile-card">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Доступ сотрудников</p>
+        <h1 class="auth-title" id="staff-title">Рабочая зона</h1>
+        <p class="auth-intro">Ваша роль проверена сервером. Инструменты рассмотрения обращений появятся на этапе административной панели.</p>
+        <dl class="profile-details">
+            <div><dt>Текущая роль</dt><dd>{{ user.get_role_display }}</dd></div>
+        </dl>
+    </div>
+</section>
+{% endblock %}

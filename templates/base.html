@@ -13,18 +13,35 @@
     <a class="skip-link" href="#main-content">Перейти к содержимому</a>
     <header class="site-header" id="top">
         <div class="header-inner">
-            <a class="brand" href="{% url 'design-preview' %}" aria-label="Nomad College — Голос колледжа">
+            <a class="brand" href="{% url 'home' %}" aria-label="Nomad College — Голос колледжа">
                 <span class="brand-name">NOMAD COLLEGE</span>
                 <span class="brand-divider" aria-hidden="true"></span>
                 <span class="brand-product">Голос колледжа</span>
             </a>
-            <nav class="main-nav" aria-label="Разделы предпросмотра">
-                <a href="#overview">Обзор</a>
-                <a href="#colors">Цвета</a>
-                <a href="#components">Компоненты</a>
-                <a href="#forms">Формы</a>
+            <nav class="main-nav" aria-label="Основная навигация">
+                <a href="{% url 'home' %}#overview">Главная</a>
+                <a href="{% url 'home' %}#latest">Последние</a>
+                <a href="{% url 'home' %}#popular">Популярные</a>
+                <a href="{% url 'home' %}#resolved">Решённые</a>
             </nav>
-            <span class="preview-pill"><span class="preview-dot" aria-hidden="true"></span>Предпросмотр</span>
+            <div class="header-tools">
+                {% if user.is_authenticated %}
+                    {% if user.role == 'moderator' or user.role == 'administrator' %}
+                        <a class="header-account-link" href="{% url 'accounts:staff-area' %}">Для сотрудников</a>
+                    {% endif %}
+                    <a class="header-account-link" href="{% url 'accounts:profile' %}">Мой профиль</a>
+                    <form class="logout-form" method="post" action="{% url 'accounts:logout' %}">
+                        {% csrf_token %}
+                        <button class="header-account-link" type="submit">Выйти</button>
+                    </form>
+                {% else %}
+                    <a class="header-account-link" href="{% url 'accounts:login' %}">Войти</a>
+                    <a class="header-register-link" href="{% url 'accounts:register' %}">Регистрация</a>
+                {% endif %}
+                {% if request.resolver_match.url_name == 'design-preview' %}
+                    <span class="preview-pill"><span class="preview-dot" aria-hidden="true"></span>Предпросмотр</span>
+                {% endif %}
+            </div>
         </div>
     </header>
 
