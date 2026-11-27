@@ -1,7 +1,14 @@
+from django.contrib import messages
+from django.db import transaction
 from django.db.models import Count
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.views.decorators.http import require_http_methods
 
-from .models import Feedback, Vote
+from accounts.decorators import role_required
+from accounts.models import User
+
+from .forms import FeedbackSubmissionForm
+from .models import Feedback, StatusHistory, Vote
 
 
 def home(request):
@@ -30,3 +37,23 @@ def home(request):
         ).order_by('-updated_at')[:3],
     }
     return render(request, 'home.html', context)
+
+
+@role_required(User.Role.STUDENT)
+@require_http_methods(['GET', 'POST'])
+def create_feedback(request):
+    form = FeedbackSubmissionForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        with transaction.atomic():
+            feedback = form.save(commit=False)
+            feedback.created_by = request.user
+            feedback.save()
+            StatusHistory.objects.create(
+                feedback=feedback,
+                new_status=feedback.status,
+                changed_by=request.user,
+            )
+        messages.success(request, 'Обращение отправлено администрации.')
+        return redirect('home')
+
+    return render(request, 'feedback/create.html', {'form': form})

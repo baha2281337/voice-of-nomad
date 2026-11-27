@@ -23,6 +23,7 @@ from feedback.views import home
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('feedback/', include('feedback.urls')),
     path('api/schema/', SpectacularAPIView.as_view(), name='openapi-schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='openapi-schema'), name='swagger-ui'),
     path('ui-preview/', TemplateView.as_view(template_name='design_preview.html'), name='design-preview'),

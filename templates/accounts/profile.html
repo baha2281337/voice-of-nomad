@@ -7,7 +7,7 @@
     <div class="auth-card profile-card">
         <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Аккаунт</p>
         <h1 class="auth-title" id="auth-title">Здравствуйте, {{ user.first_name|default:user.username }}</h1>
-        <p class="auth-intro">Вы вошли в систему. История обращений и настройки профиля появятся на следующих этапах.</p>
+        <p class="auth-intro">Ваш профиль и обращения в администрацию колледжа.</p>
         {% if messages %}
             <div class="auth-messages" aria-live="polite">
                 {% for message in messages %}<p class="auth-message">{{ message }}</p>{% endfor %}
@@ -17,6 +17,37 @@
             <div><dt>Имя пользователя</dt><dd>{{ user.username }}</dd></div>
             <div><dt>Роль</dt><dd>{{ user.get_role_display }}</dd></div>
         </dl>
+        {% if user.role == 'student' %}
+            <section class="profile-feedback" aria-labelledby="my-feedback-title">
+                <div class="profile-feedback-heading">
+                    <h2 id="my-feedback-title">Мои обращения</h2>
+                    <a class="text-link" href="{% url 'feedback:create' %}">Создать обращение</a>
+                </div>
+                {% if my_feedback %}
+                    <div class="my-feedback-list">
+                        {% for item in my_feedback %}
+                            <article class="my-feedback-item">
+                                <div class="my-feedback-copy">
+                                    <p class="feed-kind">{{ item.get_kind_display }} · {{ item.category.name }}</p>
+                                    <h3>{{ item.title }}</h3>
+                                    <p class="feed-description">{{ item.description|truncatechars:180 }}</p>
+                                    <time datetime="{{ item.created_at|date:'c' }}">Отправлено {{ item.created_at|date:'j E Y, H:i' }}</time>
+                                </div>
+                                {% if item.status == 'new' %}<span class="status status-new"><span></span>{{ item.get_status_display }}</span>
+                                {% elif item.status == 'resolved' %}<span class="status status-done"><span></span>{{ item.get_status_display }}</span>
+                                {% elif item.status == 'rejected' %}<span class="status status-rejected"><span></span>{{ item.get_status_display }}</span>
+                                {% else %}<span class="status status-progress"><span></span>{{ item.get_status_display }}</span>{% endif %}
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="home-empty-state home-empty-compact">
+                        <strong>Вы ещё не отправляли обращений</strong>
+                        <p>Создайте предложение или сообщите администрации о проблеме.</p>
+                    </div>
+                {% endif %}
+            </section>
+        {% endif %}
         <form method="post" action="{% url 'accounts:logout' %}">
             {% csrf_token %}
             <button class="button button-secondary auth-submit" type="submit">Выйти из аккаунта</button>

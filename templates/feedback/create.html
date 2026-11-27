@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Новое обращение{% endblock %}
+
+{% block content %}
+<section class="section-wrap auth-wrap" aria-labelledby="feedback-title">
+    <div class="auth-card auth-card-wide">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>Голос колледжа</p>
+        <h1 class="auth-title" id="feedback-title">Новое обращение</h1>
+        <p class="auth-intro">Поделитесь предложением или расскажите о проблеме. Поля со звёздочкой обязательны.</p>
+
+        <form class="auth-form feedback-form" method="post">
+            {% csrf_token %}
+            {% if form.non_field_errors %}<div class="auth-errors" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+            {% for field in form %}
+                <div class="field-group{% if field.name == 'description' or field.name == 'is_anonymous' %} field-full{% endif %}{% if field.name == 'is_anonymous' %} checkbox-group{% endif %}">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span aria-hidden="true">*</span>{% endif %}</label>
+                    {{ field }}
+                    {% if field.help_text %}<div class="field-hint">{{ field.help_text }}</div>{% endif %}
+                    {% for error in field.errors %}<p class="field-error" role="alert">{{ error }}</p>{% endfor %}
+                </div>
+            {% endfor %}
+            <div class="form-actions field-full">
+                <button class="button button-primary" type="submit">Отправить обращение</button>
+                <a class="button button-secondary" href="{% url 'home' %}">Отмена</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

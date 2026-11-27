@@ -7,6 +7,7 @@ from django.views.decorators.http import require_http_methods
 from .decorators import role_required
 from .forms import StudentRegistrationForm
 from .models import User
+from feedback.models import Feedback
 
 
 @require_http_methods(['GET', 'POST'])
@@ -35,7 +36,10 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    my_feedback = Feedback.objects.none()
+    if request.user.role == User.Role.STUDENT:
+        my_feedback = request.user.feedback_items.select_related('category').order_by('-created_at')
+    return render(request, 'accounts/profile.html', {'my_feedback': my_feedback})
 
 
 @role_required(User.Role.MODERATOR, User.Role.ADMINISTRATOR)
